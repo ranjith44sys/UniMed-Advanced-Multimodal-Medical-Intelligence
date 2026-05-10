@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniMedAI - Premium Medical Imaging</title>
+    <link rel="stylesheet" href="styles.css?v=5.0">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Main Header -->
+    <header class="main-header">
+        <div class="logo">
+            <div style="display: flex; flex-direction: column; line-height: 1.1;">
+                <span>UniMed</span>
+                <small style="font-size: 8px; letter-spacing: 1px; color: var(--text-light); font-weight: 700; margin-top: 2px;">ADVANCED MULTI-MODAL MEDICAL INTELLIGENCE</small>
+            </div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#" class="active">Home</a></li>
+                <li><a href="#">Research</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>We Make <span>Quality</span> Healthcare</h1>
+            <p>Advanced multi-modal medical imaging analysis platform powered by next-generation foundation models. Zero-shot diagnostics for clinical excellence.</p>
+        </div>
+    </section>
+
+    <!-- Features Bar (Category Selection) -->
+    <div class="features-bar" id="categoriesGrid">
+        <div class="feature-item active" data-category="radiology" onclick="selectCategory('radiology')">
+            <div class="feature-icon"><i class="fas fa-lungs"></i></div>
+            <h3>Radiology</h3>
+            <p>CT, MRI, & X-ray analysis with zero-shot BioMedCLIP.</p>
+        </div>
+        <div class="feature-item" data-category="pathology" onclick="selectCategory('pathology')">
+            <div class="feature-icon"><i class="fas fa-microscope"></i></div>
+            <h3>PathologyAssist</h3>
+            <p>WSI & Tissue microscopy with few-shot adaptation.</p>
+        </div>
+        <div class="feature-item" data-category="dynamics" onclick="selectCategory('dynamics')">
+            <div class="feature-icon"><i class="fas fa-video"></i></div>
+            <h3>DynamicMed</h3>
+            <p>Real-time Ultrasound & Endoscopy spatiotemporal analysis.</p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Radiology Section -->
+        <div class="content-section active" id="radiology">
+            <div class="section-grid">
+                <div class="upload-card">
+                    <h2 style="margin-bottom: 20px; color: var(--secondary);">Radiology Analysis Engine</h2>
+                    <p style="margin-bottom: 30px; color: var(--text-light);">Upload your DICOM, NIfTI, or high-res medical images for AI-powered diagnostic assistance.</p>
+                    
+                    <div class="upload-zone" onclick="document.getElementById('radiology-upload').click()">
+                        <div class="upload-icon"><i class="fas fa-cloud-upload-alt"></i></div>
+                        <div class="upload-text" id="radiology-filename">Drop CT, MRI, or X-ray images here</div>
+                        <p style="font-size: 12px; color: var(--text-light); margin-top: 10px;">Supported: .DCM, .NII, .PNG, .JPG</p>
+                        <input type="file" id="radiology-upload" style="display: none;" accept=".dcm,.nii,.nii.gz,.png,.jpg" onchange="handleFileSelect('radiology')">
+                    </div>
+
+                    <button class="btn btn-primary" id="btn-radiology" onclick="analyze('radiology')" style="width: 100%; margin-top: 25px; padding: 18px;">
+                        <span class="spinner"></span>
+                        <i class="fas fa-microchip" style="margin-right: 10px;"></i> Run Advanced Analysis
+                    </button>
+                </div>
+                
+                <div class="analysis-result" id="radiology-result">
+                    <!-- Result content injected by JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Pathology Section -->
+        <div class="content-section" id="pathology">
+            <div class="section-grid">
+                <div class="upload-card">
+                    <h2 style="margin-bottom: 20px; color: var(--secondary);">PathologyAssist Engine</h2>
+                    <p style="margin-bottom: 30px; color: var(--text-light);">Digital pathology analysis for Whole Slide Imaging (WSI). Hierarchical tissue analysis.</p>
+                    
+                    <div class="upload-zone" onclick="document.getElementById('pathology-upload').click()">
+                        <div class="upload-icon"><i class="fas fa-dna"></i></div>
+                        <div class="upload-text" id="pathology-filename">Drop Whole Slide Image (SVS/TIFF)</div>
+                        <p style="font-size: 12px; color: var(--text-light); margin-top: 10px;">Few-shot adaptation for rare tumor types supported</p>
+                        <input type="file" id="pathology-upload" style="display: none;" accept=".svs,.tiff,.ndpi,.jpg" onchange="handleFileSelect('pathology')">
+                    </div>
+
+                    <button class="btn btn-primary" id="btn-pathology" onclick="analyze('pathology')" style="width: 100%; margin-top: 25px; padding: 18px;">
+                        <span class="spinner"></span>
+                        <i class="fas fa-flask" style="margin-right: 10px;"></i> Analyze Histopathology
+                    </button>
+                </div>
+                
+                <div class="analysis-result" id="pathology-result">
+                    <!-- Result content injected by JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Dynamic Imaging Section -->
+        <div class="content-section" id="dynamics">
+            <div class="section-grid">
+                <div class="upload-card">
+                    <h2 style="margin-bottom: 20px; color: var(--secondary);">DynamicMed Platform</h2>
+                    <p style="margin-bottom: 30px; color: var(--text-light);">Real-time spatiotemporal analysis for Ultrasound & Endoscopy video streams.</p>
+                    
+                    <div class="upload-zone" onclick="document.getElementById('dynamics-upload').click()">
+                        <div class="upload-icon"><i class="fas fa-video"></i></div>
+                        <div class="upload-text" id="dynamics-filename">Upload Ultrasound or Endoscopy Stream</div>
+                        <p style="font-size: 12px; color: var(--text-light); margin-top: 10px;">Supported: MP4, AVI, DICOM Video</p>
+                        <input type="file" id="dynamics-upload" style="display: none;" accept=".mp4,.avi,.mov,.dcm" onchange="handleFileSelect('dynamics')">
+                    </div>
+
+                    <button class="btn btn-primary" id="btn-dynamics" onclick="analyze('dynamics')" style="width: 100%; margin-top: 25px; padding: 18px;">
+                        <span class="spinner"></span>
+                        <i class="fas fa-play-circle" style="margin-right: 10px;"></i> Start Live Analysis
+                    </button>
+                </div>
+                
+                <div class="analysis-result" id="dynamics-result">
+                    <!-- Result content injected by JS -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer style="background: var(--secondary-dark); color: var(--white); padding: 50px 5%; text-align: center;">
+        <div class="logo" style="color: var(--white); justify-content: center; margin-bottom: 20px;">
+            <div style="display: flex; flex-direction: column; align-items: center; line-height: 1.1;">
+                <span>UniMed</span>
+                <small style="font-size: 8px; letter-spacing: 1px; color: rgba(255,255,255,0.6); font-weight: 700; margin-top: 2px;">ADVANCED MULTI-MODAL MEDICAL INTELLIGENCE</small>
+            </div>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
